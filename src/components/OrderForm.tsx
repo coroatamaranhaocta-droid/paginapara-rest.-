@@ -9,6 +9,40 @@ interface OrderFormProps {
   onOrderCompleted: () => void;
 }
 
+const BAIRROS_COROATA = [
+  'Centro',
+  'Tresidela',
+  'Novo Coroatá',
+  'Maçaranduba',
+  'Areal',
+  'Cohab',
+  'Mariol',
+  'Jordão',
+  'Flor do Dia',
+  'Americano',
+  'Nova Jerusalém',
+  'Vila Kanaan',
+  'Mutirão',
+  'Casas Populares',
+  'Campo de Aviação',
+  'Piauí',
+  'Caracol',
+  'Marajá',
+  'Palmeira',
+  'Mangueira',
+  'Vila Cilene',
+  'Cajueiro',
+  'Vila Maranhão',
+  'Pau de Estopa',
+  'Creoli do Sinhá',
+  'Rodoviária',
+  'Trecho Seco',
+  'Bacabalzinho',
+  'Estação',
+  'Ipem',
+  'Macaúba'
+].sort();
+
 export default function OrderForm({ isOpenNow, onOrderCompleted }: OrderFormProps) {
   // Estado dinâmico de produtos cadastrados pelo ADM
   const [carnes, setCarnes] = useState<Produto[]>([]);
@@ -190,9 +224,18 @@ export default function OrderForm({ isOpenNow, onOrderCompleted }: OrderFormProp
       confirmButtonColor: '#991b1b',
     });
 
-    // Resetar campos opcionais
+    // Resetar campos opcionais e limpar todos os dados do cliente conforme solicitado
     setCarneSelected('');
     setAcompsSelected([]);
+    setClienteNome('');
+    setClienteTelefone('');
+    setEndereco('');
+    setNumero('');
+    setBairro('');
+    setReferencia('');
+    setFormaPagamento('Pix');
+    setPrecisaTroco(false);
+    setValorTroco('');
     onOrderCompleted();
   };
 
@@ -212,7 +255,15 @@ export default function OrderForm({ isOpenNow, onOrderCompleted }: OrderFormProp
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto mb-14">
         {/* Card 1: PF COMPLETO */}
         <div 
-          onClick={() => setTipoMarmita('PF Completo')}
+          onClick={() => {
+            setTipoMarmita('PF Completo');
+            setTimeout(() => {
+              const element = document.getElementById('secao-carne');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }, 80);
+          }}
           className={`cursor-pointer rounded-2xl p-6 border-2 transition-all relative overflow-hidden backdrop-blur-sm shadow-md ${
             tipoMarmita === 'PF Completo' 
               ? 'border-amber-500 bg-amber-50/50 scale-102 ring-4 ring-amber-500/10' 
@@ -246,7 +297,15 @@ export default function OrderForm({ isOpenNow, onOrderCompleted }: OrderFormProp
 
         {/* Card 2: QUENTINHA / MARMITA */}
         <div 
-          onClick={() => setTipoMarmita('Quentinha / Marmita')}
+          onClick={() => {
+            setTipoMarmita('Quentinha / Marmita');
+            setTimeout(() => {
+              const element = document.getElementById('secao-carne');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }, 80);
+          }}
           className={`cursor-pointer rounded-2xl p-6 border-2 transition-all relative overflow-hidden backdrop-blur-sm shadow-md ${
             tipoMarmita === 'Quentinha / Marmita' 
               ? 'border-amber-500 bg-amber-50/50 scale-102 ring-4 ring-amber-500/10' 
@@ -281,7 +340,7 @@ export default function OrderForm({ isOpenNow, onOrderCompleted }: OrderFormProp
 
 
       {/* 2. SEÇÃO ESCOLHA SUA CARNE */}
-      <div className="border-t border-stone-200/80 pt-12 mb-16">
+      <div id="secao-carne" className="border-t border-stone-200/80 pt-12 mb-16 scroll-mt-24">
         <div className="text-center mb-8">
           <h3 className="font-serif text-2xl md:text-3xl font-bold text-stone-900 tracking-tight">
             1. Escolha a sua Carne Principal 🥩
@@ -302,7 +361,15 @@ export default function OrderForm({ isOpenNow, onOrderCompleted }: OrderFormProp
               return (
                 <div
                   key={carne.id}
-                  onClick={() => setCarneSelected(carne.nome)}
+                  onClick={() => {
+                    setCarneSelected(carne.nome);
+                    setTimeout(() => {
+                      const element = document.getElementById('secao-acompanhamentos');
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    }, 100);
+                  }}
                   className={`cursor-pointer rounded-xl bg-white border overflow-hidden shadow-sm transition hover:shadow-md ${
                     isSelected 
                       ? 'border-red-600 ring-2 ring-red-600/30' 
@@ -315,6 +382,7 @@ export default function OrderForm({ isOpenNow, onOrderCompleted }: OrderFormProp
                       alt={carne.nome} 
                       className="w-full h-full object-cover" 
                       referrerPolicy="no-referrer"
+                      loading="lazy"
                     />
                     {isSelected && (
                       <div className="absolute inset-0 bg-red-900/10 flex items-center justify-center">
@@ -337,7 +405,7 @@ export default function OrderForm({ isOpenNow, onOrderCompleted }: OrderFormProp
 
 
       {/* 3. SEÇÃO ACOMPANHAMENTOS */}
-      <div className="border-t border-stone-200/80 pt-12 mb-16">
+      <div id="secao-acompanhamentos" className="border-t border-stone-200/80 pt-12 mb-16 scroll-mt-24">
         <div className="text-center mb-8">
           <h3 className="font-serif text-2xl md:text-3xl font-bold text-stone-900 tracking-tight">
             2. Selecione seus Acompanhamentos 🥗
@@ -371,6 +439,7 @@ export default function OrderForm({ isOpenNow, onOrderCompleted }: OrderFormProp
                       alt={acomp.nome} 
                       className="w-full h-full object-cover" 
                       referrerPolicy="no-referrer"
+                      loading="lazy"
                     />
                     {isSelected && (
                       <div className="absolute inset-0 bg-amber-900/10 flex items-center justify-center">
@@ -389,11 +458,28 @@ export default function OrderForm({ isOpenNow, onOrderCompleted }: OrderFormProp
             })}
           </div>
         )}
+
+        {/* Botão de avanço rápido para Dados de Entrega / Retirada */}
+        <div className="flex justify-center mt-10">
+          <button
+            type="button"
+            onClick={() => {
+              const element = document.getElementById('secao-entrega');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }}
+            className="px-8 py-3.5 bg-gradient-to-r from-red-800 to-amber-700 hover:from-red-700 hover:to-amber-600 active:scale-95 text-white rounded-2xl font-display font-bold text-sm sm:text-base flex items-center justify-center gap-2 px-6 shadow-md hover:shadow-lg transition duration-200"
+          >
+            <span>Avançar para Entrega ou Retirada 🚗</span>
+            <ArrowRight className="w-4 h-4 text-white" />
+          </button>
+        </div>
       </div>
 
 
       {/* 4. FORMULÁRIO DE PEDIDO & ADM INFO */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 border-t border-stone-200/80 pt-12">
+      <div id="secao-entrega" className="grid grid-cols-1 lg:grid-cols-12 gap-8 border-t border-stone-200/80 pt-12 scroll-mt-24">
         
         {/* Lado Esquerdo - Campos do Cliente */}
         <form onSubmit={handleFinalizarPedido} className="lg:col-span-7 bg-stone-50 p-6 md:p-8 rounded-2xl border border-stone-200/60 shadow-inner space-y-6">
@@ -490,11 +576,17 @@ export default function OrderForm({ isOpenNow, onOrderCompleted }: OrderFormProp
                   <input
                     type="text"
                     required={tipoEntrega === 'Entrega'}
-                    placeholder="Ex: Centro"
+                    list="bairros-coroata"
+                    placeholder="Digite ou pesquise o bairro"
                     value={bairro}
                     onChange={(e) => setBairro(e.target.value)}
                     className="w-full bg-white border border-stone-300 rounded-lg px-3.5 py-2.5 text-stone-800 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-red-800 focus:border-transparent transition shadow-sm"
                   />
+                  <datalist id="bairros-coroata">
+                    {BAIRROS_COROATA.map((b) => (
+                      <option key={b} value={b} />
+                    ))}
+                  </datalist>
                 </div>
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-stone-600 mb-1.5">Cidade *</label>
