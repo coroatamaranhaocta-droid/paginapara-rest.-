@@ -1,0 +1,125 @@
+{
+  "entities": {
+    "Produto": {
+      "title": "Produto",
+      "description": "Item do cardápio do restaurante (marmitas, carnes, acompanhamentos)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nome": { "type": "string" },
+        "preco": { "type": "number" },
+        "descricao": { "type": "string" },
+        "imagem": { "type": "string" },
+        "ativa": { "type": "boolean" },
+        "categoria": { "type": "string", "enum": ["prato", "carne", "acompanhamento"] }
+      },
+      "required": ["id", "nome", "preco", "ativa", "categoria"]
+    },
+    "Pedido": {
+      "title": "Pedido",
+      "description": "Pedidos de marmitas feitos pelos clientes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "clienteNome": { "type": "string" },
+        "clienteTelefone": { "type": "string" },
+        "endereco": { "type": "string" },
+        "numero": { "type": "string" },
+        "bairro": { "type": "string" },
+        "cidade": { "type": "string" },
+        "referencia": { "type": "string" },
+        "formaPagamento": { "type": "string" },
+        "precisaTroco": { "type": "boolean" },
+        "valorTroco": { "type": "string" },
+        "tipoEntrega": { "type": "string", "enum": ["Entrega", "Retirada"] },
+        "status": { "type": "string", "enum": ["Pendente", "Confirmado", "Entregue", "Cancelado"] },
+        "tipoMarmita": { "type": "string" },
+        "valorMarmita": { "type": "number" },
+        "carne": { "type": "string" },
+        "acompanhamentos": { "type": "string" },
+        "total": { "type": "number" },
+        "dataCriacao": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "clienteNome", "clienteTelefone", "formaPagamento", "tipoEntrega", "total", "dataCriacao"]
+    },
+    "Cliente": {
+      "title": "Cliente",
+      "description": "Informações de contato e entrega dos clientes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nome": { "type": "string" },
+        "telefone": { "type": "string" },
+        "endereco": { "type": "string" },
+        "numero": { "type": "string" },
+        "bairro": { "type": "string" },
+        "cidade": { "type": "string" }
+      },
+      "required": ["id", "nome", "telefone"]
+    },
+    "Horario": {
+      "title": "Horario",
+      "description": "Horários de funcionamento por dia da semana",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "diaSemana": { "type": "string" },
+        "abertura": { "type": "string" },
+        "fechamento": { "type": "string" },
+        "fechado": { "type": "boolean" }
+      },
+      "required": ["id", "diaSemana", "abertura", "fechamento", "fechado"]
+    },
+    "Feriado": {
+      "title": "Feriado",
+      "description": "Cadastro de feriados e dias sem funcionamento normal",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nome": { "type": "string" },
+        "data": { "type": "string" },
+        "descricao": { "type": "string" },
+        "funcionamento": { "type": "string", "enum": ["Fechado", "Funcionamento especial"] }
+      },
+      "required": ["id", "nome", "data", "funcionamento"]
+    },
+    "Mensagem": {
+      "title": "Mensagem",
+      "description": "Sistema de avisos e mensagens automáticas para serem exibidas no site",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "texto": { "type": "string" },
+        "ativa": { "type": "boolean" },
+        "dataCriacao": { "type": "string" }
+      },
+      "required": ["id", "texto", "ativa"]
+    }
+  },
+  "firestore": {
+    "/produtos/{produtoId}": {
+      "schema": "Produto",
+      "description": "Lista de produtos cadastrados"
+    },
+    "/pedidos/{pedidoId}": {
+      "schema": "Pedido",
+      "description": "Informações resumidas e completas de pedidos"
+    },
+    "/clientes/{clienteId}": {
+      "schema": "Cliente",
+      "description": "Lista de clientes registrados"
+    },
+    "/horarios/{horarioId}": {
+      "schema": "Horario",
+      "description": "Log de horários permitidos de funcionamento"
+    },
+    "/feriados/{feriadoId}": {
+      "schema": "Feriado",
+      "description": "Lista de feriados cadastrados"
+    },
+    "/mensagens/{mensagemId}": {
+      "schema": "Mensagem",
+      "description": "Avisos e comunicados especiais"
+    }
+  }
+}

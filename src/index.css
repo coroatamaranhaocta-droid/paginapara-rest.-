@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;750;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-display: "Outfit", sans-serif;
+}
+
+/* Custom rich scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #fdfaf6;
+}
+::-webkit-scrollbar-thumb {
+  background: #c2410c;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #991b1b;
+}
+
+/* SweetAlert customization to match brand colors */
+.swal2-popup {
+  font-family: 'Inter', sans-serif !important;
+  border-radius: 1rem !important;
+}
+.swal2-styled.swal2-confirm {
+  background-color: #991b1b !important; /* Burgundy */
+}
+.swal2-styled.swal2-cancel {
+  background-color: #4b5563 !important;
+}
+

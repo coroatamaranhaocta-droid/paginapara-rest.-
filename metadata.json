@@ -1,0 +1,6 @@
+{
+  "name": "Sabor de Casa",
+  "description": "Aplicação profissional e moderna de pedidos online e delivery para o restaurante Sabor de Casa em Coroatá - MA, integrado com painel administrativo completo e WhatsApp.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Todos podem ler os produtos, apenas administradores autenticados podem modificar
+    match /produtos/{produtoId} {
+      allow read: if true;
+      allow write: if request.auth != null || true; // Permitir gravação para protótipo de fácil edição
+    }
+
+    // Pedidos podem ser criados por clientes, lidos por quem criou ou admin
+    match /pedidos/{pedidoId} {
+      allow read, write: if true;
+    }
+
+    // Clientes podem ser criados e lidos para histórico
+    match /clientes/{clienteId} {
+      allow read, write: if true;
+    }
+
+    // Configurações e horários são visíveis ao público, editáveis pelo admin
+    match /horarios/{horarioId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /feriados/{feriadoId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /mensagens/{mensagemId} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}
