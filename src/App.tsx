@@ -39,7 +39,6 @@ export default function App() {
       {/* 1. TOPO DA PÁGINA (Header + Banner com Status de Funcionamento) */}
       <HeaderBanner
         onGoToOrder={handleScrollToOrder}
-        onGoToAdmin={() => setIsAdminOpen(true)}
         isOpenNow={isOpenStatus.aberto}
         isOpenStatus={isOpenStatus}
       />
@@ -106,9 +105,17 @@ export default function App() {
             ♥ Obrigado pela preferência! Qualidade, carinho e sabor que você sente! ♥
           </p>
 
-          <p className="text-stone-500 text-xs">
-            © {new Date().getFullYear()} Sabor de Casa. Todos os direitos reservados.
-          </p>
+          <div className="flex flex-col items-center md:items-end gap-2.5">
+            <p className="text-stone-500 text-xs">
+              © {new Date().getFullYear()} Sabor de Casa. Todos os direitos reservados.
+            </p>
+            <button
+              onClick={() => setIsAdminOpen(true)}
+              className="text-[11px] text-stone-400 hover:text-amber-400 transition bg-stone-900 hover:bg-stone-800 px-3 py-1 rounded-md border border-stone-800 flex items-center justify-center gap-1 mx-auto md:mr-0 font-medium"
+            >
+              <span>🔐 Painel do Administrador</span>
+            </button>
+          </div>
         </div>
       </footer>
 
